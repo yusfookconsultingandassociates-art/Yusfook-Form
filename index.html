@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="YUSFOOK consulting and associates ltd subscription package form">
+    <title>YUSFOOK consulting and associates ltd Personal Account Opening Form</title>
+    <style>
+        :root {
+            --ink: #25204c;
+            --muted: #686582;
+            --brand: #05043a;
+            --accent: #ee9b47;
+            --line: #cbc8da;
+            --paper: #fff;
+            --wash: #f3f1fa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #e8e6ef;
+            color: var(--ink);
+            font: 14px/1.4 Arial, sans-serif;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 14px max(20px, calc((100% - 1100px) / 2));
+            background: var(--brand);
+            color: white;
+            box-shadow: 0 3px 14px #20134b33;
+        }
+
+        .toolbar strong {
+            letter-spacing: .08em;
+            font-size: 15px;
+        }
+
+        .toolbar small {
+            display: block;
+            color: #d8d1ee;
+        }
+
+        .toolbar img {
+            height: 50px;
+            background-color: #fff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .actions button,
+        .pager button {
+            border: 0;
+            border-radius: 5px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .actions button {
+            background: white;
+            color: var(--brand);
+        }
+
+        .actions button:last-child {
+            background: var(--accent);
+            color: #2c1744;
+        }
+
+        .form-shell {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        /* A4 Sizing for Pages / Landing Page */
+        .paper {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 0;
+            margin: 0 auto 24px;
+            background: var(--paper);
+            box-shadow: 0 8px 22px #251a4b1a;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* Exact Cover Page Styling matching A4 proportions and two-tone design */
+        .cover {
+            width: 210mm;
+            height: 297mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--brand);
+            color: white;
+            padding: 20mm 20mm;
+        }
+
+        .cover-top {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .cover-top img {
+            height: 50px;
+            background: #fff;
+            padding: 4px;
+        }
+
+        .cover-content {
+            margin: 20px 0;
+        }
+
+        .cover h1 {
+            margin: 0;
+            color: white;
+            font-size: clamp(45px, 7vw, 75px);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            text-transform: uppercase;
+        }
+
+        /* Bottom White Section container */
+        .cover-bottom-panel {
+            background: #ffffff;
+            color: var(--brand);
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .cover-services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: #ffffff;
+            border: 1px solid var(--line);
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .cover-services-grid div {
+            padding: 18px 10px;
+            border-right: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cover-services-grid div:last-child {
+            border-right: none;
+        }
+
+        .cover-services-grid span {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--brand);
+            line-height: 1.3;
+        }
+
+        .cover-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand);
+        }
+
+        .cover-footer-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .social-circle {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--brand);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .website-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand);
+        }
+
+        /* Standard Page Styling */
+        .standard-page-content {
+            padding: 42px 54px;
+            width: 100%;
+        }
+
+        .notice {
+            padding: 11px 14px;
+            background: var(--wash);
+            border-left: 4px solid var(--accent);
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .section-title {
+            margin: 18px 0 10px;
+            padding: 7px 12px;
+            background: var(--brand);
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 10px 14px;
+            align-items: end;
+        }
+
+        .field {
+            grid-column: span 4;
+        }
+
+        .field.wide {
+            grid-column: span 8;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 3px;
+            padding: 8px 9px;
+            color: var(--ink);
+            background: white;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        /* .choice-row { display: flex; flex-wrap: wrap; gap: 13px 20px; align-items: center; color: var(--muted); font-size: 12px; font-weight: 700; } */
+        .choice-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .declaration i {
+            font-size: 12px;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .choice {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .choice input {
+            width: auto;
+            accent-color: var(--brand);
+        }
+
+        .terms {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .terms li {
+            margin: 0 0 15px;
+        }
+
+        .signature-line {
+            height: 82px;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .photo-box {
+            width: 170px;
+            height: 190px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .declaration {
+            margin-top: 24px;
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 17px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .data-copy p {
+            margin: 0 0 17px;
+            color: var(--muted);
+            font-size: 20px;
+        }
+
+        .data-copy li {
+            margin: 0 0 10px;
+            font-weight: 700;
+        }
+
+        .yus h2 {
+            margin-top: 40px;
+        }
+
+        .bank-use {
+            min-height: 400px;
+        }
+
+        .pager {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto 36px;
+        }
+
+        .pager button {
+            background: var(--brand);
+            color: white;
+        }
+
+        .pager button:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        #page-count {
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .signature-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            align-items: center;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .payment {
+            background: var(--brand);
+            color: white;
+            padding: 7px 12px;
+            font-size: 13px;
+            Font-weight: 800;
+        }
+
+        .section-payment {
+            padding: 0 54px 42px;
+        }
+
+        .choice-pay {
+            display: flex;
+        }
+
+        .section-pay {
+            margin: 20px 50px;
+        }
+
+        .wit {
+            font-weight: 700;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .stinput input {
+            width: 10%;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1.5px solid var(--ink);
+            color: var(--ink);
+            /* margin-top: 10px; */
+        }
+
+        .standard {
+            margin: 10px 20px;
+            font-size: 20px;
+        }
+
+        .passport-box {
+            width: 180px;
+            height: 220px;
+            border: 1.5px solid #aeb4c6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            user-select: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        /* Hover effect */
+        .passport-box:hover {
+            border-color: #4a6fa5;
+            background-color: #f9fafc;
+        }
+
+        /* Style for the default placeholder text */
+        .passport-text {
+            color: #3b4256;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.35;
+            padding: 10px;
+        }
+
+        /* Hide the default HTML file input element */
+        .passport-box input[type="file"] {
+            display: none;
+        }
+
+        /* Preview image styling (hidden until image is selected) */
+        .passport-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .signature-box {
+            width: 320px;
+            height: 50px;
+            border: 1.5px solid #aeb4c6;
+            border-radius: 4px;
+            background-color: #ffffff;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .signature-box:hover {
+            border-color: #4a6fa5;
+            background-color: #f9fafc;
+        }
+
+        .signature-text {
+            color: #7a8296;
+            font-size: 14px;
+        }
+
+        .signature-box input[type="file"] {
+            display: none;
+        }
+
+        .signature-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+            position: absolute;
+        }
+
+        /* .standard input[type="date"] {
+            width: 20%;
+        } */
+
+        /* .type{display: flex; padding-top: 20px;} */
+
+        @media (max-width: 700px) {
+            .toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-shell {
+                margin: 12px 0;
+            }
+
+            .paper {
+                width: 100%;
+                min-height: 0;
+            }
+
+            .cover {
+                width: 100%;
+                height: auto;
+                padding: 24px 18px;
+            }
+
+            .standard-page-content {
+                padding: 24px 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .cover-services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field,
+            .field.wide {
+                grid-column: 1 / -1;
+            }
+
+            .photo-box {
+                width: 130px;
+                height: 145px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .toolbar,
+            .pager {
+                display: none;
+            }
+
+            .form-shell {
+                margin: 0;
+                max-width: none;
+            }
+
+            .paper {
+                display: flex !important;
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: always;
+                overflow: hidden;
+            }
+
+            .paper:last-child {
+                page-break-after: auto;
+            }
+
+            input,
+            textarea {
+                border-color: #777;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <header class="toolbar">
+        <img src="yusfook logo.png" alt="Yusfook Logo">
+        <div class="actions">
+            <button type="button" id="clear-form">Clear form</button>
+            <button type="button" id="print-form">Print / Save PDF</button>
+        </div>
+    </header> -->
+    <!-- <form id="account-form" action="https://formspree.io/f/xrpeyknq" method="POST"></form> -->
+    <header class="toolbar">
+    <img src="yusfook logo.png" alt="Yusfook Logo">
+    <div class="actions">
+        <button type="button" id="clear-form">Clear form</button>
+        <button type="submit" form="account-form" id="submit-form">Submit</button>
+        <button type="button" id="print-form">Print / Save PDF</button>
+    </div>
+    <!-- HTML Anchor styled as a submit button -->
+<!-- <a href="mailto:your-email@gmail.com?subject=New%20Subscription%20Form&body=Please%20fill%20out%20the%20form%20fields." 
+   id="email-submit-btn" 
+   class="email-btn">
+   Submit via Email
+</a> -->
+<!-- HTML Submit Link/Button -->
+<a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a>
+
+
+</header>
+
+<!-- <main class="form-shell">
+    <form id="account-form" action="https://formspree.io/f/xrpeyknq" method="POST">
+    </form>
+</main> -->
+
+    <main class="form-shell">
+        <form id="account-form">
+            <section class="paper-pages">
+                <!-- Landing Page in Exact A4 Size with White Bottom Panel -->
+                <section class="paper page active" data-page="1">
+                    <div class="cover">
+                        <div class="cover-top">
+                            <img src="yusfook logo.png" alt="Yusfook Logo">
+                        </div>
+                        <div class="cover-content">
+                            <h1>SUBSCRIPTION<br>PACKAGE</h1>
+                        </div>
+                        <div class="cover-bottom-panel">
+                            <div class="cover-services-grid">
+                                <div>
+                                    <div class="social-circle">🤝</div>
+                                    <span>Financial & Management</span>
+                                </div>
+                                <div>
+                                    <div class="social-circle">📄</div>
+                                    <span>Business Advisory</span>
+                                </div>
+                                <div>
+                                    <div class="social-circle">🏛️</div>
+                                    <span>Flexible Real Estate Planning</span>
+                                </div>
+                            </div>
+                            <div class="cover-footer">
+                                <div class="cover-footer-left">
+                                    <div class="social-icons">
+                                        <div class="social-circle">📷</div>
+                                        <div class="social-circle">f</div>
+                                        <div class="social-circle">𝕏</div>
+                                    </div>
+                                    <span>Yusfook_ltd</span>
+                                </div>
+                                <div class="website-info">
+                                    <span>🌐</span>
+                                    <span>www.yusfook.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <section class="paper page" data-page="4">
+                <div class="standard-page-content">
+                    <div class="data-copy">
+                        <h2>Dear valued potential customer,</h2>
+                        <div class="yus">
+                            <h2>YUSFOOK CONSULTING AND ASSOCIATES LIMITED</h2>
+                        </div>
+                        <p>Yusfook Consulting & Assocites LTD is an innovative company that is attempting to turn the
+                            Financial and Management consulting, Business Advisory and Flexible Real Estate banking on
+                            its head.</p>
+                        <p>Yusfook Consulting & Associates LTD provide small-medium to large-size companies,corporate
+                            bodies, individual, etc. with diverse services covering the subject Financial and Management
+                            Consultancy, Advisory and flexible Real Estate banking.</p>
+                        <h2>OUR MISSION</h2>
+                        <p>Our mission is to help our clients achieve their objectives by providing innovative and
+                            best-in-class services. We help our customers to see the world differntly, unlock insight,
+                            discover opportunities. infused the courage to act and achieve the result that bridge "what
+                            is with we can be."</p>
+                        <h2>OUR VISION</h2>
+                        <p>To be the number one; among the best known consulting firms in Nigeria, serving diverse
+                            clients. Helping our clients create a sustainable future.</p>
+                        <h2>OUR PRODUCT AND SERVICES</h2>
+                        <ul>
+                            <li>Financial and Management consulting</li>
+                            <li>Advisory</li>
+                            <li>Real Estate(Shelter and Agriculture)</li>
+                        </ul>
+                        <h2>OUR VALUE PROPOSITION</h2>
+                        <p>Our words <span><strong>"...towards a sustainable future." remain our
+                                    focus.</strong></span>And we are committed to fulfilling our core values of
+                            <strong>Professional Transparency and Accountability</strong> in every of our doings.
+                        </p>
+                        <h2>OUR HUMBLE SUBMISSION</h2>
+                        <p>We will like to round off by saying maintaining a <strong>COOPERATIVE CONTRIBUTORY SAVINGS
+                                PORTFOLIO (YUSCOOP)</strong> with us is a wise decision and we promise you a strict
+                            adherence to our core values.</p>
+                        <p>Hold us responsible for any comporise of these core values. We welcome you to <strong>YUSFOOK
+                                CONSULTING AND ASSOCIATES LTD.</strong></p>
+                        <p>Thank you.</p>
+                    </div>
+                    <!-- <div class="section-title">Bank Verification Number (BVN) Operations and Watch-List</div>
+                    <ol class="terms">
+                        <li>You consent to us applying restrictions on your account and reporting to law enforcement agencies if a fraudulent activity is associated with the operation of your account.</li>
+                        <li>You consent to us reporting to Nigeria Inter-Bank Settlement Systems Plc (NIBSS) for update on the watchlist database of the Nigerian Banking Industry and the Central Bank of Nigeria (CBN) if a fraudulent activity is associated with the operation of your account.</li>
+                    </ol> -->
+                    <hr style="margin: 20px 0;">
+                    <!-- <p class="declaration">I/We hereby certify that the information given on this form is correct and that I/We have read, understood and agree with the Account opening terms &amp; conditions governing the selected account(s).</p>
+                    <div class="signature-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top:20px;">
+                        <div>
+                            <div class="signature-line" style="height:50px;"></div><label>Principal Account Holder's Signature</label>
+                        </div>
+                        <div>
+                            <div class="signature-line" style="height:50px;"></div><label>Authorized Signatory</label>
+                        </div>
+                    </div>
+                </div> -->
+            </section>
+            <section class="paper page" data-page="2">
+                <div class="standard-page-content">
+                    <div class="page-header">
+                        <div style="flex:1">
+                            <div class="notice">This form should be completed in CAPITAL LETTERS.</div>
+                            <div class="field-grid" style="margin-top:16px">
+                                <div class="field wide"><label for="branch">BRANCH</label><input id="branch"
+                                        name="branch" type="text"></div>
+                                <!-- <div class="field wide"><label for="account-number">ACCOUNT NO. (For official use only)</label><input id="account-number" name="accountNumber" type="text"></div> -->
+                                <div class="field full"><label for="bvn">National Identification
+                                        Number(NIN)</label><input id="bvn" name="bvn" type="text"></div>
+                                <div class="field"><label for="referral">Relationship Officer</label><input
+                                        id="referral" name="referral" type="text"></div>
+                            </div>
+                        </div>
+                        <!-- <div class="photo-box">Affix<br>passport<br>photograph<br>here</div> -->
+                        <div class="passport-box" onclick="document.getElementById('passportInput').click()">
+                            <span class="passport-text"
+                                id="placeholderText">Affix<br>passport<br>photograph<br>here</span>
+                            <img id="imagePreview" alt="Passport Preview">
+                            <input type="file" id="passportInput" accept="image/*" onchange="previewPassport(event)">
+                        </div>
+                    </div>
+                    <div class="section-title">1. Personal Information</div>
+                    <div class="field-grid">
+                        <div class="field"><label>Title</label><input name="title" type="text"></div>
+                        <div class="field wide"><label>First Name</label><input name="firstName" type="text"></div>
+                        <div class="field wide"><label>Surname</label><input name="surname" type="text"></div>
+                        <div class="field wide"><label>Other Names</label><input name="otherNames" type="text"></div>
+                        <div class="field full"><label>Marital Status</label>
+                            <div class="choice-row">
+                                <span class="choice"><input type="checkbox" name="single"> Single</span>
+                                <span class="choice"><input type="checkbox" name="married"> Married</span>
+                                <span class="choice"><input type="checkbox" name="otherMarital"> Others (specify) <input
+                                        name="maritalOther" type="text"
+                                        style="display:inline-block; width:auto;"></span>
+                            </div>
+                        </div>
+                        <!-- <div class="field wide"><label>Mother's Maiden Name</label><input name="maidenName" type="text"></div> -->
+                        <div class="field"><label>Date of Birth</label><input name="dob" type="date"></div>
+                        <div class="field"><label>Gender</label>
+                            <div class="choice-row">
+                                <span class="choice"><input type="checkbox" name="male"> Male</span>
+                                <span class="choice"><input type="checkbox" name="female"> Female</span>
+                            </div>
+                        </div>
+                        <div class="field wide"><label>Place of Birth</label><input name="countryOfBirth" type="text">
+                        </div>
+                        <div class="field"><label>Nationality</label><input name="nationality" type="text"></div>
+                        <!-- <div class="field"><label>2nd Nationality</label><input name="secondNationality" type="text"></div> -->
+                        <!-- <div class="field"><label>Permit Issue Date</label><input name="permitIssue" type="date"></div> -->
+                        <!-- <div class="field"><label>Permit Expiry Date</label><input name="permitExpiry" type="date"></div> -->
+                        <div class="field wide"><label>L.G.A.</label><input name="lga" type="text"></div>
+                        <div class="field wide"><label>State of Origin</label><input name="stateOfOrigin" type="text">
+                        </div>
+                        <div class="field wide"><label>Permanent Voter's Card(PVC)</label><input name="tin" type="text">
+                        </div>
+                        <!-- <div class="field"><label>Resident Permit No.</label><input name="residentPermit" type="text"></div> -->
+                    </div>
+                    <div class="section-title">2. COUPLES/PARTNERS ONLY</div>
+                    <div class="page-header">
+                        <div style="flex:1">
+                            <div class="field-grid">
+                                <div class="field full"><label>Partner 1: Title</label><input name="signatoryFirstName"
+                                        type="text"></div>
+                                <div class="field full"><label>First Name</label><input name="signatorySurname"
+                                        type="text"></div>
+                                <div class="field full"><label>Last Name</label><input name="signatoryOtherNames"
+                                        type="text"></div>
+                                <div class="field full"><label>Telephone No.</label><input name="signatoryPhone"
+                                        type="number"></div>
+                                <div class="field full"><label>Partner 2: Title</label><input name="signatoryClass"
+                                        type="text"></div>
+                                <div class="field full"><label>First Name</label><input name="idType" type="text"></div>
+                                <div class="field full"><label>Last Name</label><input name="idNumber" type="text">
+                                </div>
+                                <div class="field full"><label>Telephone No.</label><input name="signatoryPhone"
+                                        type="number"></div>
+                                <!-- <div class="field full"><label>Signature &amp; Date</label><input name="signatoryDate" type="text"></div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="photo-box">PHOTO</div> -->
+                    </div>
+                    <div class="section-title">3. CUSTOMERS BELOW 18 YEARS OF AGE(MINOR)</div>
+                    <div class="page-header">
+                        <div style="flex:1">
+                            <div class="field-grid">
+                                <div class="field full"><label>Name of Guardian</label><input name="signatoryFirstName"
+                                        type="text"></div>
+                                <div class="field full"><label>Relationship with Minor</label><input
+                                        name="signatorySurname" type="text"></div>
+                                <!-- <div class="field full"><label>Last Name</label><input name="signatoryOtherNames" type="text"></div>
+                                <div class="field full"><label>Partner 2: Title</label><input name="signatoryClass" type="text"></div>
+                                <div class="field full"><label>First Name</label><input name="idType" type="text"></div>
+                                <div class="field full"><label>Last Name</label><input name="idNumber" type="text"></div>
+                                <div class="field full"><label>Telephone No.</label><input name="signatoryPhone" type="tel"></div> -->
+                                <div>Date of birth of Guardian<input type="date"></div>
+                                <!-- <div class="field full"><label>Guardian Signature</label><input name="signatoryDate"
+                                        type="text"></div> -->
+                                <div class="form-group">
+                                    <label class="form-label">Guardian Signature</label>
+                                    <div class="signature-box"
+                                        onclick="document.getElementById('signatureInput').click()">
+                                        <span class="signature-text" id="signaturePlaceholder">Click to upload signature
+                                            image</span>
+                                        <img id="signaturePreview" alt="Signature Preview">
+                                        <input type="file" id="signatureInput" accept="image/*"
+                                            onchange="previewImage(event, 'signaturePreview', 'signaturePlaceholder')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="photo-box">PHOTO</div> -->
+                    </div>
+                    <div class="section-title">4. Contact Details</div>
+                    <div class="field-grid">
+                        <div class="field"><label>House Number</label><input name="houseNumber" type="text"></div>
+                        <div class="field wide"><label>Residential Address</label><input name="streetName" type="text">
+                        </div>
+                        <!-- <div class="field full"><label>Nearest Bus Stop / Landmark</label><input name="landmark" type="text"></div> -->
+                        <div class="field wide"><label>City / Town</label><input name="city" type="text"></div>
+                        <div class="field"><label>L.G.A.</label><input name="contactLga" type="text"></div>
+                        <div class="field"><label>State</label><input name="state" type="text"></div>
+                        <div class="field"><label>Phone Number 1</label><input name="phone1" type="tel"></div>
+                        <div class="field"><label>Phone Number 2</label><input name="phone2" type="tel"></div>
+                        <div class="field wide"><label>Email Address</label><input name="email" type="email"></div>
+                    </div>
+                    <div class="section-title">5. Employment Details</div>
+                    <div class="field-grid">
+                        <div class="field full"><label>Employment Status</label>
+                            <div class="choice-row">
+                                <span class="choice"><input type="checkbox"> Employed</span>
+
+                                <!-- <span class="choice"><input type="checkbox"> Unemployed</span>
+                                <span class="choice"><input type="checkbox"> Retired</span>
+                                <span class="choice"><input type="checkbox"> Student</span> -->
+                            </div>
+                        </div>
+                        <div class="field wide"><label>Employer's Name</label><input name="employer" type="text"></div>
+                        <div class="field"><label>Address of Employer</label><input name="employmentDate" type="text">
+                        </div>
+                        <div class="field wide"><label>Staff identification number</label><input name="employerAddress"
+                                type="text"></div>
+                        <div><span class="choice"><input type="checkbox"> Self Employed</span></div>
+                        <div class="field"><label>Type of Business</label><input name="employerState" type="text"></div>
+                        <div class="field full"><label>Business Address</label><input name="occupation" type="text">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="paper page" data-page="3">
+                <div class="standard-page-content">
+                    <div class="section-title">6. Details of Next of Kin</div>
+                    <div class="field-grid">
+                        <div class="field wide"><label>First Name</label><input name="kinFirstName" type="text"></div>
+                        <div class="field wide"><label>Other Names</label><input name="kinOtherNames" type="text"></div>
+                        <div class="field wide"><label>Surname</label><input name="kinSurname" type="text"></div>
+                        <div class="field"><label>Gender</label>
+                            <div class="choice-row"><span class="choice"><input type="checkbox"> Male</span><span
+                                    class="choice"><input type="checkbox"> Female</span></div>
+                        </div>
+                        <div class="field"><label>Title (Specify)</label><input name="kinTitle" type="text"></div>
+                        <div class="field"><label>Date of Birth</label><input name="kinDob" type="date"></div>
+                        <div class="field wide"><label>Relationship</label><input name="relationship" type="text"></div>
+                        <div class="field"><label>Phone Number 1</label><input name="kinPhone1" type="tel"></div>
+                        <div class="field"><label>Phone Number 2</label><input name="kinPhone2" type="tel"></div>
+                        <div class="field wide"><label>E-mail Address</label><input name="kinEmail" type="email"></div>
+                        <div class="field"><label>Residential Address</label><input name="kinHouse" type="text"></div>
+                        <!-- <div class="field wide"><label>Street Name</label><input name="kinStreet" type="text"></div> -->
+                        <!-- <div class="field full"><label>Nearest Bus Stop / Landmark</label><input name="kinLandmark" type="text"></div> -->
+                        <!-- <div class="field wide"><label>City / Town</label><input name="kinCity" type="text"></div> -->
+                        <!-- <div class="field"><label>L.G.A.</label><input name="kinLga" type="text"></div> -->
+                        <!-- <div class="field"><label>State</label><input name="kinState" type="text"></div> -->
+                    </div>
+                    <div class="section-title">7. Product Details</div>
+                    <div class="fil-grid">
+                        <div class="fil wide"><label>Site Location</label><input name="kinFirstName" type="text"></div>
+                        <div class="fil wide"><label>Number Of Square Meters</label><input name="kinOtherNames"
+                                type="text"></div>
+                        <div class="fil wide"><label>Price Per Square Meter</label><input name="kinSurname" type="text">
+                        </div>
+                        <div class="fil wide"><label>Amount</label><input type="number">Amount in Words</label><input
+                                name="kinSurname" type="text"></div>
+                    </div>
+                </div>
+                <div class="section-payment">
+                    <div class="payment">8. PAYMENT PLAN</div>
+                    <div>
+                        <div class="choice-pay">
+                            <span>Outright<input type="checkbox"></span>
+                            <span>Installment<input type="checkbox"></span>
+                        </div>
+                        <p class="wit">Installment Details</p>
+                        <div>
+                            <input type="text">Duration
+                            <input type="number">Monthly Repayment
+                            <input type="text">Amount in word
+                        </div>
+                    </div>
+                </div>
+                <div class="section-pay">
+                    <div class="payment">9. CUSTOMER'S ACCOUNT DETAILS(TO BE USED IN CASE OF REFUND)</div>
+                    <div class="field-grid">
+                        <div class="field wide"><label>Bank Name</label><input name="bankName" type="text"></div>
+                        <div class="field wide"><label>Account Name</label><input name="accountName" type="text"></div>
+                        <div class="field wide"><label>Account Number</label><input name="accountNumber" type="text">
+                        </div>
+                    </div>
+                    <P class="wit">WITNESS</P>
+                    <div>
+                        <p>Name of Witness <input type="text"></p>
+                        <p>Relationship <input type="text"></p>
+                        <p>Address <input type="text"></p>
+                        <p>Phone Number <input type="tel"></p>
+                    </div>
+                    <p class="wit">DECLARATION</p>
+                    <input type="text">
+                    <div class="signature-grid"
+                        style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top:20px;">
+                        <!-- <p>Signature <input type="signature"></p> -->
+                        <div class="form-group">
+                            <label class="form-label">Signature</label>
+                            <div class="signature-box" onclick="document.getElementById('signatureInput').click()">
+                                <span class="signature-text" id="signaturePlaceholder">Click to upload signature
+                                    image</span>
+                                <img id="signaturePreview" alt="Signature Preview">
+                                <input type="file" id="signatureInput" accept="image/*"
+                                    onchange="previewImage(event, 'signaturePreview', 'signaturePlaceholder')">
+                            </div>
+                        </div>
+                        <p>Date <input type="date"></p>
+                    </div>
+                </div>
+                <!-- <div class="section-payment ">
+                    <div class="section-title">10. Terms and Conditions</div>
+                    <ol class="terms"> This section set out the terms and condition applicable to our contributory
+                        saving
+                        account. it is important you read and understand before signing to this agreement. You can
+                        request
+                        more information if necessary. In this term, we refer to you as "You" and "Your".<br><br>
+                        <li>To open an account, you must be over 15years of age.</li>
+                        <li>We will verify your identify and address.</li>
+                        <li>We reserve the right to refuse to open account if we deem that you have not provided
+                            satisfactory account opening details.</li>
+                        <li>You reserve the right to withdraw your savings before the agreed date, upon an earlier
+                            notice of
+                            THREE working days.</li>
+                        <li>That this service is intrest free (on loan request and on saving)</li>
+                        <li>Read and Fill the box below in your handwriting.</li>
+                    </ol>
+                </div>
+                </div> -->
+                <!-- <div class="standard-page-content">
+                    <div class="section-title">6. Declaration</div>
+                    <div class="declaration">
+                        <p>I have read and understand the nature of this agreement and i was not forced or deceived to
+                            append my signature.<i>(Kindly Confirm below that you accept the terms and conditions)</i>
+                        </p>
+                    </div>
+                    <div class="signature-grid" style="margin-top:20px;">
+                        <div>
+                            <div><input type="text">
+                            </div>
+                            <div class="signature-line">
+                                <div><input type="text">Signature</div>
+                                <div><input type="date">Date</div>
+                            </div>
+                        </div>
+                    </div> -->
+            </section>
+            <section class="paper page" data-page="5">
+                <div class="section-payment">
+                    <div class="section-title">For Official Use Only</div>
+                    <div class="field-grid bank-use">
+                        <div class="field full"><label>Relationship Officer</label><input name="openedBy" type="text">
+                        </div>
+                        <div class="field wide"><label>Application Reviewed By</label><input name="openedByName"
+                                type="text"></div>
+                        <!-- <div class="field"><label>Signature</label><input name="openedBySignature" type="text">
+                        </div> -->
+                        <div class="form-group">
+                            <label class="form-label">Signature</label>
+                            <div class="signature-box" onclick="document.getElementById('signatureInput').click()">
+                                <span class="signature-text" id="signaturePlaceholder">Click to upload signature
+                                    image</span>
+                                <img id="signaturePreview" alt="Signature Preview">
+                                <input type="file" id="signatureInput" accept="image/*"
+                                    onchange="previewImage(event, 'signaturePreview', 'signaturePlaceholder')">
+                            </div>
+                        </div>
+                        <div class="field"><label>Date</label><input name="openedByDate" type="date"></div>
+                        <!-- <div class="field full"><label>Confirm opened by</label><input name="confirmedBy" type="text"></div> -->
+                        <p>
+                        <div class="field wide"><label>Approved By</label><input name="confirmedName" type="text"></div>
+                        <!-- <div class="field"><label>Signature</label><input name="confirmedSignature" type="text">
+                        </div> -->
+                        <div class="form-group">
+                            <label class="form-label">Signature</label>
+                            <div class="signature-box" onclick="document.getElementById('signatureInput').click()">
+                                <span class="signature-text" id="signaturePlaceholder">Click to upload signature
+                                    image</span>
+                                <img id="signaturePreview" alt="Signature Preview">
+                                <input type="file" id="signatureInput" accept="image/*"
+                                    onchange="previewImage(event, 'signaturePreview', 'signaturePlaceholder')">
+                            </div>
+                        </div>
+                        <div class="field"><label>Date</label><input name="confirmedDate" type="date"></div>
+                        </p>
+                        <!-- <div class="field full"><label>Account Documentation Checklist (Y=Yes; N=No; X=Not Applicable)</label> -->
+                        <div class="choice-row">
+                            <span class="choice"><input type="checkbox">NIN</span>
+                            <span class="choice"><input type="checkbox"> Passport</span>
+                            <!-- <span class="choice"><input type="checkbox"> KYC</span> -->
+                            <span class="choice"><input type="checkbox">PVC</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            </section>
+            <section class="paper page" data-page="6">
+                <div class="standard">
+                    <div>
+                        <p class="stinput">This contract of sale (Agreement) is made this <input type="text"> day of
+                            <input type="text">20 <input type="number"> between <strong>YUSFOOK CONSULTING AND
+                                ASSOCIATES
+                                LIMITED</strong> a company incorporated under the laws of Federal Republic of Nigeria of
+                            (address).(Hereinafter reffered to as <strong>"the Company"</strong>which expression shall
+                            shall where the context so admits including their heirs, assigns, personal representatives
+                            successor-in-title) of the part</p>
+                        <p class="wit">AND</p>
+                        <p><input type="text" placeholder="Name"> of <input type="text" placeholder="Address">
+                            Hereinafter referred to as <strong>"THE BUYER/CUSTOMER"</strong> which expression shall
+                            where the context so admits including their heirs, assigns, personal representatives
+                            successor-in-title of the other part.</p>
+                        <p><strong>LAND MEASURING:</strong><input type="text"><strong>square meters</strong></p>
+                        <p><strong>PLOT ID:</strong> <input type="text"></p>
+                        <p class="wit">WHEREAS:-</p>
+                        <P>1. The certified owner of the land is (<input type="text">) (Hereinafter referred to as
+                            <strong>"the Product"</strong>), is intrested in offering the said product to the buyer for
+                            sale at a rate hereinafter agreed upon between her and the buyer.
+                        </P>
+                        <p>2. The seller is intrested in offering the said product to the buyer for sale at a rate
+                            hereinafter agreed upon between them.</p>
+                        <p>3. The certified owner hereby agrees to sell the product to the buyer upon the terms and
+                            conditions hereinafter contained.</p>
+                        <p>4. The owner has agreed to transfer the said land to the buyer and the buyer has agreed to
+                            purchase on the following terms;
+                        <ol type="a">
+                            <li>That the land shall be transferred for a total consideration of the sum of <input
+                                    type="text"></li>
+                            <li>That the buyer shall pay the first installment to show commitment on the said land,
+                                thereafter balance shall be paid monthly without any default for the next <input
+                                    type="text"> Months.</li>
+                        </ol>
+                        </p>
+                    </div>
+                    <!-- <div>
+                        <h1>THE PATIES CONVENANT AS FOLLOWS:</h1>
+                        
+
+                    </div> -->
+                </div>
+            </section>
+            <section class="paper page" data-page="7">
+                <div class="standard">
+                    <div>
+                        <h2>THE PATIES CONVENANT AS FOLLOWS:</h2>
+                        <p>a. The proprietary right or the interest of the owner over the said product is real, genuine
+                            and subsisting.</p>
+                        <p>b. The seller shall not sell offer the said land to another buyer unless the buyer defaults
+                            in the terms of this agreement.</p>
+                        <p>c. The buyer shall pay in <input type="text"> intallments for a said parcel (s) purchased
+                            from the owner, begining from the month of purchase <input type="text"> 20<input
+                                type="number"> where a minimum of #<input type="number">shall be paid as first
+                            installment.</p>
+                        <p>d. The seller reserves the right RETRACT/REVOKE the said parcel (s) of the land from the
+                            buyer after a default of <strong>2 (two) months only during</strong>the whole tenure
+                            subscribed for in paragraph C above. In the event of revocation by the seller, the buyer
+                            shall be entitled to 60% only of total payment he/she has made to the seller.</p>
+                        <p>e. Where the buyer terminates the contract prematurely before the execution of the Deed of
+                            Transfer/Conveyance, he/she (the Buyer) shall be entitled to 60% only of total payment
+                            he/she has made to the seller.</p>
+                        <p>f. The seller warrants that the product(s) in her possession are genuine for use according to
+                            the law of the land.</p>
+                        <p>g. In case of fencing before the completion of full payment, one of the site beacons must be
+                            retained for identification.</p>
+                        <p>h. In case of development before completion of full payment, you must inform the company
+                            before starting and take necessary steps with appropriate government authorities.</p>
+                        <p>i. That the DEED OF TRANSFER shall be SIGNED at the completion of all dues.</p>
+                        <p>j. That the buyer shall be dealing with the company directly and that all payments are
+                            payable (only) to the company's designated account.
+                        </p>
+                        <ul>
+                            <ol>Account Name: YUSFOOK CONSULTING AND ASSOCIATES LTD</ol>
+                            <ol>Account Number: 2004060999</ol>
+                            <ol>Bank Name: FCMB</ol>
+                        </ul>
+                        </p>
+                        <p>k. After the buyer has been shown his plot(s) once, the buyer should take physical possession
+                            of his/her and, any further request from the customer to be taken to site shall be at a cost
+                            born by the customer.</p>
+                        <p>In the event of unanticipated demise of the buyer, the seller shall pay back or continue the
+                            contract with the next of kin who must be an adult at the time/administrature via letters of
+                            administration/heir of the buyer herein.</p>
+                        <p>m. Upon allocation of the land to a customer, she/he is deemed to have taken possession of
+                            the said land and the customer shall take responsibility for maintenance of the said land.
+                        </p>
+                        <p>n. The contract ends at the delivery of Deed of Transfer/Conveyance, thus all rights and
+                            liabilities on the land subscribed, legally transmit to the buyer.</p>
+                    </div>
+                </div>
+
+            </section>
+            <section class="paper page" data-page="8">
+                <div class="standard">
+                    <p>Read and Fill the below statements in your handwriting.</p>
+                    <p><strong>"I have read and understood the nature of this agreement and i was not in any way
+                            coerced, forced, or deceived to append my signature on this contract"</strong> <input
+                            type="text"></p>
+                    <div>
+                        <!-- <p>Signature</p> -->
+                        <div class="form-group">
+                            <label class="form-label">Signature</label>
+                            <div class="signature-box" onclick="document.getElementById('signatureInput').click()">
+                                <span class="signature-text" id="signaturePlaceholder">Click to upload signature
+                                    image</span>
+                                <img id="signaturePreview" alt="Signature Preview">
+                                <input type="file" id="signatureInput" accept="image/*"
+                                    onchange="previewImage(event, 'signaturePreview', 'signaturePlaceholder')">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signature-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top:20px;">
+                        <p>Date:<input type="date"></p>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <nav class="pager" aria-label="Form pages">
+        <button type="button" id="previous">Previous</button>
+        <span id="page-count">Page 1 of 5</span>
+        <button type="button" id="next">Next</button>
+    </nav>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+<script>
+    // const pages = [...document.querySelectorAll('.page')];
+    // const previous = document.querySelector('#previous');
+    // const next = document.querySelector('#next');
+    // const pageCount = document.querySelector('#page-count');
+    // let currentPage = 0;
+    // function showPage(page) {
+    //     currentPage = Math.max(0, Math.min(page, pages.length - 1));
+    //     pages.forEach((item, index) => item.classList.toggle('active', index === currentPage));
+    //     previous.disabled = currentPage === 0;
+    //     next.disabled = currentPage === pages.length - 1;
+    //     pageCount.textContent = `Page ${currentPage + 1} of ${pages.length}`;
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // }
+    // next.addEventListener('click', () => showPage(currentPage + 1));
+    // previous.addEventListener('click', () => showPage(currentPage - 1));
+    // document.querySelector('#print-form').addEventListener('click', () => window.print());
+    // document.querySelector('#clear-form').addEventListener('click', () => { if (window.confirm('Clear all entered information?')) document.querySelector('#account-form').reset(); });
+    // showPage(0);
+    // function previewPassport(event) {
+    //     const input = event.target;
+    //     const file = input.files[0];
+
+    //     if (file) {
+    //         const reader = new FileReader();
+
+    //         reader.onload = function (e) {
+    //             const preview = document.getElementById('imagePreview');
+    //             const placeholder = document.getElementById('placeholderText');
+
+    //             preview.src = e.target.result;
+    //             preview.style.display = 'block';
+    //             placeholder.style.display = 'none';
+    //         };
+
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
+    // function previewImage(event, previewId, placeholderId) {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             const preview = document.getElementById(previewId);
+    //             const placeholder = document.getElementById(placeholderId);
+
+    //             preview.src = e.target.result;
+    //             preview.style.display = 'block';
+    //             placeholder.style.display = 'none';
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
+    const pages = [...document.querySelectorAll('.page')];
+const previous = document.querySelector('#previous');
+const next = document.querySelector('#next');
+const pageCount = document.querySelector('#page-count');
+let currentPage = 0;
+
+function showPage(page) {
+    currentPage = Math.max(0, Math.min(page, pages.length - 1));
+    pages.forEach((item, index) => item.classList.toggle('active', index === currentPage));
+    previous.disabled = currentPage === 0;
+    next.disabled = currentPage === pages.length - 1;
+    pageCount.textContent = `Page ${currentPage + 1} of ${pages.length}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+next.addEventListener('click', () => showPage(currentPage + 1));
+previous.addEventListener('click', () => showPage(currentPage - 1)); // Fixed syntax error here
+
+document.querySelector('#print-form').addEventListener('click', () => window.print());
+
+document.querySelector('#clear-form').addEventListener('click', () => { 
+    if (window.confirm('Clear all entered information?')) {
+        document.querySelector('#account-form').reset(); 
+    } 
+});
+
+// Handle Form Submission via Fetch (Sends proper JSON to Formspree)
+document.getElementById('direct-email-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const form = document.getElementById('account-form');
+    let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
+    
+    // Collect all inputs, textareas, and selects across the form
+    const elements = form.querySelectorAll('input, textarea, select');
+    elements.forEach(el => {
+        if (!el.name) return;
+        
+        if (el.type === 'checkbox' || el.type === 'radio') {
+            if (el.checked) {
+                emailBody += `${el.name}: ${el.value ? el.value : 'Yes'}\n`;
+            }
+        } else if (el.value.trim() !== '') {
+            emailBody += `${el.name}: ${el.value}\n`;
+        }
+    });
+
+    // Replace with your actual email address
+    const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
+    const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
+    const body = encodeURIComponent(emailBody);
+
+    // Triggers the user's default email client (Gmail, Outlook, etc.)
+    window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+});
+
+showPage(0);
+
+function previewPassport(event) {
+    const input = event.target;
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const preview = document.getElementById('imagePreview');
+            const placeholder = document.getElementById('placeholderText');
+
+            if (preview && placeholder) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function previewImage(event, previewId, placeholderId) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById(previewId);
+            const placeholder = document.getElementById(placeholderId);
+
+            if (preview && placeholder) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
+</html>
