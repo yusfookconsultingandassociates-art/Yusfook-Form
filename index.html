@@ -656,24 +656,16 @@
     <img src="yusfook logo.png" alt="Yusfook Logo">
     <div class="actions">
         <button type="button" id="clear-form">Clear form</button>
-        <form id="account-form">
-  <!-- your existing fields, each with a name="" -->
-
-  <!-- spam trap (leave empty, hidden from real visitors) -->
-  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-
-  <button type="submit" id="submit-btn" class="actions-button">Submit</button>
-  <p id="form-status" role="status" aria-live="polite"></p>
-</form>
+        <button><a href="mailto:your-email@gmail.com?subject=New%20Subscription%20Form&body=Please%20fill%20out%20the%20form%20fields." 
+   id="email-submit-btn" 
+   class="email-btn">
+   Submit via Email
+</a></button>
         <!-- <button type="submit" form="account-form" id="submit-form"><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button> -->
         <button type="button" id="print-form">Print / Save PDF</button>
     </div>
     <!-- HTML Anchor styled as a submit button -->
-<!-- <a href="mailto:your-email@gmail.com?subject=New%20Subscription%20Form&body=Please%20fill%20out%20the%20form%20fields." 
-   id="email-submit-btn" 
-   class="email-btn">
-   Submit via Email
-</a> -->
+
 <!-- HTML Submit Link/Button -->
 
 
@@ -1403,76 +1395,32 @@ document.querySelector('#clear-form').addEventListener('click', () => {
 });
 
 // Handle Form Submission via Fetch (Sends proper JSON to Formspree)
-// document.getElementById('direct-email-btn').addEventListener('click', function(e) {
-//     e.preventDefault();
+document.getElementById('direct-email-btn').addEventListener('click', function(e) {
+    e.preventDefault();
     
-//     const form = document.getElementById('account-form');
-//     let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
+    const form = document.getElementById('account-form');
+    let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
     
-//     const elements = form.querySelectorAll('input, textarea, select');
-//     elements.forEach(el => {
-//         if (!el.name) return;
+    const elements = form.querySelectorAll('input, textarea, select');
+    elements.forEach(el => {
+        if (!el.name) return;
         
-//         if (el.type === 'checkbox' || el.type === 'radio') {
-//             if (el.checked) {
-//                 emailBody += `${el.name}: ${el.value ? el.value : 'Yes'}\n`;
-//             }
-//         } else if (el.value.trim() !== '') {
-//             emailBody += `${el.name}: ${el.value}\n`;
-//         }
-//     });
-
-//     const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
-//     const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
-//     const body = encodeURIComponent(emailBody);
-
-//     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
-// });
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyouzXjSZubMA9Wm8JCdB3xhJwX9i5QY5dtlYrMj7PixCYpRfDpSzhsBYAcJ11bEVxetA/exec";
-
-const form = document.getElementById("account-form");
-const btn = document.getElementById("submit-btn");
-const status = document.getElementById("form-status");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if (!form.checkValidity()) { form.reportValidity(); return; }
-
-  btn.disabled = true;
-  btn.textContent = "Sending...";
-  status.textContent = "";
-
-  try {
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      body: new URLSearchParams(new FormData(form))
+        if (el.type === 'checkbox' || el.type === 'radio') {
+            if (el.checked) {
+                emailBody += `${el.name}: ${el.value ? el.value : 'Yes'}\n`;
+            }
+        } else if (el.value.trim() !== '') {
+            emailBody += `${el.name}: ${el.value}\n`;
+        }
     });
-    status.textContent = "Thank you! Your form has been submitted.";
-    form.reset();
-  } catch (err) {
-    status.textContent = "Couldn't send. Please try again.";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Submit";
-  }
+
+    const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
+    const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
+    const body = encodeURIComponent(emailBody);
+
+    window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
 });
 
-function doPost(e) {
-  const p = e.parameter;
-  let body = "New Subscription & Account Opening Form Submission:\n\n";
-  for (const key in p) {
-    if (key !== "website" && p[key]) body += key + ": " + p[key] + "\n";
-  }
-  if (p.website) return ContentService.createTextOutput("ok"); // spam trap
-  MailApp.sendEmail({
-    to: "yusfookconsultingandassociates@gmail.com",
-    subject: "New Subscription Form Submission - Yusfook Consulting",
-    body: body,
-    replyTo: p.email || ""
-  });
-  return ContentService.createTextOutput("ok");
-}
 
 showPage(0);
 
