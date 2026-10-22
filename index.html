@@ -1432,24 +1432,24 @@ function submitViaEmail() {
     const branch = document.querySelector('[name="branch"]')?.value || '';
 
     // 2. Validate that required fields are filled out before opening email
-    if (!firstName || !surname || !phone) {
-        alert("Please fill in at least your First Name, Surname, and Phone Number before submitting.");
-        return;
-    }
+    // if (!firstName || !surname || !phone) {
+    //     alert("Please fill in at least your First Name, Surname, and Phone Number before submitting.");
+    //     return;
+    // }
 
     // 3. Format the email subject and structured body text
-    // const subject = encodeURIComponent(`New Account Opening: ${firstName} ${surname}`);
+    const subject = encodeURIComponent(`New Account Opening: ${firstName} ${surname}`);
     
-    // let body = `--- YUSFOOK CONSULTING ACCOUNT OPENING ---\n\n`;
-    // body += `Branch / Office: ${branch}\n`;
-    // body += `First Name: ${firstName}\n`;
-    // body += `Surname: ${surname}\n`;
-    // body += `Phone Number: ${phone}\n`;
-    // body += `Email Address: ${email}\n`;
-    // body += `BVN: ${bvn}\n\n`;
-    // body += `Note: Customer signature and passport photo files should be attached manually before sending.`;
+    let body = `--- YUSFOOK CONSULTING ACCOUNT OPENING ---\n\n`;
+    body += `Branch / Office: ${branch}\n`;
+    body += `First Name: ${firstName}\n`;
+    body += `Surname: ${surname}\n`;
+    body += `Phone Number: ${phone}\n`;
+    body += `Email Address: ${email}\n`;
+    body += `BVN: ${bvn}\n\n`;
+    body += `Note: Customer signature and passport photo files should be attached manually before sending.`;
 
-    // const encodedBody = encodeURIComponent(body);
+    const encodedBody = encodeURIComponent(body);
 
     // 4. Trigger the user's default email client
     window.location.href = `mailto:yusfookconsultingandassociates@gmail.com?subject=${subject}&body=${encodedBody}`;
