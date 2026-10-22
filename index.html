@@ -656,11 +656,7 @@
     <img src="yusfook logo.png" alt="Yusfook Logo">
     <div class="actions">
         <button type="button" id="clear-form">Clear form</button>
-        <button><a href="mailto:your-email@gmail.com?subject=New%20Subscription%20Form&body=Please%20fill%20out%20the%20form%20fields." 
-   id="email-submit-btn" 
-   class="email-btn">
-   Submit via Email
-</a></button>
+        <button><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button>
         <!-- <button type="submit" form="account-form" id="submit-form"><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button> -->
         <button type="button" id="print-form">Print / Save PDF</button>
     </div>
@@ -1395,12 +1391,14 @@ document.querySelector('#clear-form').addEventListener('click', () => {
 });
 
 // Handle Form Submission via Fetch (Sends proper JSON to Formspree)
+<!-- HTML Submit Link/Button -->
 document.getElementById('direct-email-btn').addEventListener('click', function(e) {
     e.preventDefault();
     
     const form = document.getElementById('account-form');
     let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
     
+    // Collect all inputs, textareas, and selects across the form
     const elements = form.querySelectorAll('input, textarea, select');
     elements.forEach(el => {
         if (!el.name) return;
@@ -1414,10 +1412,12 @@ document.getElementById('direct-email-btn').addEventListener('click', function(e
         }
     });
 
+    // Replace with your actual email address
     const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
     const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
     const body = encodeURIComponent(emailBody);
 
+    // Triggers the user's default email client (Gmail, Outlook, etc.)
     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
 });
 
