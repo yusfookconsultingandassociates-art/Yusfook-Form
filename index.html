@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="YUSFOOK consulting and associates ltd subscription package form">
+    <link rel="shortcut icon" href="yusfook.jpg" type="image/x-icon">
     <title>YUSFOOK consulting and associates ltd Personal Account Opening Form</title>
     <style>
         :root {
@@ -1393,32 +1394,84 @@ document.querySelector('#clear-form').addEventListener('click', () => {
 });
 
 // Handle Form Submission via Fetch (Sends proper JSON to Formspree)
-document.getElementById('direct-email-btn').addEventListener('click', function(e) {
+// document.getElementById('direct-email-btn').addEventListener('click', function(e) {
+//     e.preventDefault();
+    
+//     const form = document.getElementById('account-form');
+//     let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
+    
+//     const elements = form.querySelectorAll('input, textarea, select');
+//     elements.forEach(el => {
+//         if (!el.name) return;
+        
+//         if (el.type === 'checkbox' || el.type === 'radio') {
+//             if (el.checked) {
+//                 emailBody += `${el.name}: ${el.value ? el.value : 'Yes'}\n`;
+//             }
+//         } else if (el.value.trim() !== '') {
+//             emailBody += `${el.name}: ${el.value}\n`;
+//         }
+//     });
+
+//     const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
+//     const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
+//     const body = encodeURIComponent(emailBody);
+
+//     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+// });
+document.getElementById('account-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const form = document.getElementById('account-form');
-    let emailBody = "New Subscription & Account Opening Form Submission:\n\n";
+    const form = this;
+    let emailBody = "=== YUSFOOK ACCOUNT OPENING FORM SUBMISSION ===\n\n";
     
-    // Collect all inputs, textareas, and selects across the form
+    // Select all inputs, textareas, and selects
     const elements = form.querySelectorAll('input, textarea, select');
+    
     elements.forEach(el => {
         if (!el.name) return;
         
+        // Try to find the human-readable label for this field
+        let labelText = el.name; // Fallback to name if label isn't found
+        
+        // 1. Check if there's a label using 'for="element_id"'
+        if (el.id) {
+            const label = form.querySelector(`label[for="${el.id}"]`);
+            if (label) labelText = label.textContent.trim();
+        }
+        
+        // 2. If not found, check if the input is wrapped inside a label or near one
+        if (labelText === el.name) {
+            const parentField = el.closest('.field');
+            if (parentField) {
+                const parentLabel = parentField.querySelector('label');
+                if (parentLabel) labelText = parentLabel.textContent.trim();
+            }
+        }
+
+        // Clean up label text (remove trailing colons or asterisks if any)
+        labelText = labelText.replace(/[:*]/g, '').trim();
+
+        // Capture values based on input type
         if (el.type === 'checkbox' || el.type === 'radio') {
             if (el.checked) {
-                emailBody += `${el.name}: ${el.value ? el.value : 'Yes'}\n`;
+                emailBody += `${labelText}: ${el.value ? el.value : 'Yes'}\n`;
             }
-        } else if (el.value.trim() !== '') {
-            emailBody += `${el.name}: ${el.value}\n`;
+        } else if (el.type === 'file') {
+            if (el.files && el.files[0]) {
+                emailBody += `${labelText} [File Attached]: ${el.files[0].name}\n`;
+            }
+        } else if (el.value && el.value.trim() !== '') {
+            emailBody += `${labelText}: ${el.value.trim()}\n`;
         }
     });
 
     // Replace with your actual email address
     const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
-    const subject = encodeURIComponent("New Subscription Form Submission - Yusfook Consulting");
+    const subject = encodeURIComponent("New Form Submission - Yusfook Consulting");
     const body = encodeURIComponent(emailBody);
 
-    // Triggers the user's default email client (Gmail, Outlook, etc.)
+    // Triggers the user's default email client with formatted text
     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
 });
 
