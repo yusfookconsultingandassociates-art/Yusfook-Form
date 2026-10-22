@@ -656,9 +656,15 @@
     <img src="yusfook logo.png" alt="Yusfook Logo">
     <div class="actions">
         <button type="button" id="clear-form">Clear form</button>
-        <div class="btn-container">
-    <button type="button" id="submit-email-btn" onclick="submitViaEmail()">Submit via Email</button>
-</div>
+        <form id="account-form">
+  <!-- your existing fields, each with a name="" -->
+
+  <!-- spam trap (leave empty, hidden from real visitors) -->
+  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+
+  <button type="submit" id="submit-btn" class="actions-button">Submit</button>
+  <p id="form-status" role="status" aria-live="polite"></p>
+</form>
         <!-- <button type="submit" form="account-form" id="submit-form"><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button> -->
         <button type="button" id="print-form">Print / Save PDF</button>
     </div>
@@ -1422,37 +1428,50 @@ document.querySelector('#clear-form').addEventListener('click', () => {
 
 //     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
 // });
-function submitViaEmail() {
-    // 1. Grab the key field values from your form
-    const firstName = document.querySelector('[name="firstName"]')?.value || '';
-    const surname = document.querySelector('[name="surname"]')?.value || '';
-    const phone = document.querySelector('[name="phone1"]')?.value || '';
-    const email = document.querySelector('[name="email"]')?.value || '';
-    const bvn = document.querySelector('[name="bvn"]')?.value || '';
-    const branch = document.querySelector('[name="branch"]')?.value || '';
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyouzXjSZubMA9Wm8JCdB3xhJwX9i5QY5dtlYrMj7PixCYpRfDpSzhsBYAcJ11bEVxetA/exec";
 
-    // 2. Validate that required fields are filled out before opening email
-    // if (!firstName || !surname || !phone) {
-    //     alert("Please fill in at least your First Name, Surname, and Phone Number before submitting.");
-    //     return;
-    // }
+const form = document.getElementById("account-form");
+const btn = document.getElementById("submit-btn");
+const status = document.getElementById("form-status");
 
-    // 3. Format the email subject and structured body text
-    const subject = encodeURIComponent(`New Account Opening: ${firstName} ${surname}`);
-    
-    let body = `--- YUSFOOK CONSULTING ACCOUNT OPENING ---\n\n`;
-    body += `Branch / Office: ${branch}\n`;
-    body += `First Name: ${firstName}\n`;
-    body += `Surname: ${surname}\n`;
-    body += `Phone Number: ${phone}\n`;
-    body += `Email Address: ${email}\n`;
-    body += `BVN: ${bvn}\n\n`;
-    body += `Note: Customer signature and passport photo files should be attached manually before sending.`;
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!form.checkValidity()) { form.reportValidity(); return; }
 
-    const encodedBody = encodeURIComponent(body);
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+  status.textContent = "";
 
-    // 4. Trigger the user's default email client
-    window.location.href = `mailto:yusfookconsultingandassociates@gmail.com?subject=${subject}&body=${encodedBody}`;
+  try {
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: new URLSearchParams(new FormData(form))
+    });
+    status.textContent = "Thank you! Your form has been submitted.";
+    form.reset();
+  } catch (err) {
+    status.textContent = "Couldn't send. Please try again.";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Submit";
+  }
+});
+
+function doPost(e) {
+  const p = e.parameter;
+  let body = "New Subscription & Account Opening Form Submission:\n\n";
+  for (const key in p) {
+    if (key !== "website" && p[key]) body += key + ": " + p[key] + "\n";
+  }
+  if (p.website) return ContentService.createTextOutput("ok"); // spam trap
+  MailApp.sendEmail({
+    to: "yusfookconsultingandassociates@gmail.com",
+    subject: "New Subscription Form Submission - Yusfook Consulting",
+    body: body,
+    replyTo: p.email || ""
+  });
+  return ContentService.createTextOutput("ok");
 }
 
 showPage(0);
