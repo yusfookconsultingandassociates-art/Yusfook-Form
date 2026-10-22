@@ -656,7 +656,10 @@
     <img src="yusfook logo.png" alt="Yusfook Logo">
     <div class="actions">
         <button type="button" id="clear-form">Clear form</button>
-        <button type="submit" form="account-form" id="submit-form"><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button>
+        <div class="btn-container">
+    <button type="button" id="submit-email-btn" onclick="submitViaEmail()">Submit via Email</button>
+</div>
+        <!-- <button type="submit" form="account-form" id="submit-form"><a href="#" id="direct-email-btn" class="actions-button">Submit via Email</a></button> -->
         <button type="button" id="print-form">Print / Save PDF</button>
     </div>
     <!-- HTML Anchor styled as a submit button -->
@@ -1419,61 +1422,38 @@ document.querySelector('#clear-form').addEventListener('click', () => {
 
 //     window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
 // });
-document.getElementById('account-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+function submitViaEmail() {
+    // 1. Grab the key field values from your form
+    const firstName = document.querySelector('[name="firstName"]')?.value || '';
+    const surname = document.querySelector('[name="surname"]')?.value || '';
+    const phone = document.querySelector('[name="phone1"]')?.value || '';
+    const email = document.querySelector('[name="email"]')?.value || '';
+    const bvn = document.querySelector('[name="bvn"]')?.value || '';
+    const branch = document.querySelector('[name="branch"]')?.value || '';
+
+    // 2. Validate that required fields are filled out before opening email
+    if (!firstName || !surname || !phone) {
+        alert("Please fill in at least your First Name, Surname, and Phone Number before submitting.");
+        return;
+    }
+
+    // 3. Format the email subject and structured body text
+    const subject = encodeURIComponent(`New Account Opening: ${firstName} ${surname}`);
     
-    const form = this;
-    let emailBody = "=== YUSFOOK ACCOUNT OPENING FORM SUBMISSION ===\n\n";
-    
-    // Select all inputs, textareas, and selects
-    const elements = form.querySelectorAll('input, textarea, select');
-    
-    elements.forEach(el => {
-        if (!el.name) return;
-        
-        // Try to find the human-readable label for this field
-        let labelText = el.name; // Fallback to name if label isn't found
-        
-        // 1. Check if there's a label using 'for="element_id"'
-        if (el.id) {
-            const label = form.querySelector(`label[for="${el.id}"]`);
-            if (label) labelText = label.textContent.trim();
-        }
-        
-        // 2. If not found, check if the input is wrapped inside a label or near one
-        if (labelText === el.name) {
-            const parentField = el.closest('.field');
-            if (parentField) {
-                const parentLabel = parentField.querySelector('label');
-                if (parentLabel) labelText = parentLabel.textContent.trim();
-            }
-        }
+    let body = `--- YUSFOOK CONSULTING ACCOUNT OPENING ---\n\n`;
+    body += `Branch / Office: ${branch}\n`;
+    body += `First Name: ${firstName}\n`;
+    body += `Surname: ${surname}\n`;
+    body += `Phone Number: ${phone}\n`;
+    body += `Email Address: ${email}\n`;
+    body += `BVN: ${bvn}\n\n`;
+    body += `Note: Customer signature and passport photo files should be attached manually before sending.`;
 
-        // Clean up label text (remove trailing colons or asterisks if any)
-        labelText = labelText.replace(/[:*]/g, '').trim();
+    const encodedBody = encodeURIComponent(body);
 
-        // Capture values based on input type
-        if (el.type === 'checkbox' || el.type === 'radio') {
-            if (el.checked) {
-                emailBody += `${labelText}: ${el.value ? el.value : 'Yes'}\n`;
-            }
-        } else if (el.type === 'file') {
-            if (el.files && el.files[0]) {
-                emailBody += `${labelText} [File Attached]: ${el.files[0].name}\n`;
-            }
-        } else if (el.value && el.value.trim() !== '') {
-            emailBody += `${labelText}: ${el.value.trim()}\n`;
-        }
-    });
-
-    // Replace with your actual email address
-    const yourEmail = "yusfookconsultingandassociates@gmail.com"; 
-    const subject = encodeURIComponent("New Form Submission - Yusfook Consulting");
-    const body = encodeURIComponent(emailBody);
-
-    // Triggers the user's default email client with formatted text
-    window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
-});
+    // 4. Trigger the user's default email client
+    window.location.href = `mailto:yusfookconsultingandassociates@gmail.com?subject=${subject}&body=${encodedBody}`;
+}
 
 showPage(0);
 
